@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
 import { Features } from "./components/features";
@@ -9,6 +9,7 @@ import { Testimonials } from "./components/testimonials";
 import { Team } from "./components/Team";
 import { Contact } from "./components/contact";
 import JsonData from "./data/data.json";
+import axios from "axios";
 import SmoothScroll from "smooth-scroll";
 import "./App.css";
 import {
@@ -29,17 +30,28 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 });
 
 const App = () => {
+  
+  const [news, setNews] = useState([]);
   const [landingPageData, setLandingPageData] = useState({});
+  const fetchNews = async () => {
+    const res = await axios.get(
+      "https://farmers-assistant-backend.herokuapp.com/news"
+    );
+    setNews(res.data);
+    console.log(res.data);
+  };
+
   useEffect(() => {
+    fetchNews();
     setLandingPageData(JsonData);
   }, []);
 
   return (
     <Router>
     
+      <Navigation />
       <Switch>
       <Route exact path="/">
-      <Navigation />
 
         <Header data={landingPageData.Header} />
       <Features data={landingPageData.Features} />
@@ -63,7 +75,7 @@ const App = () => {
           <Disease />
       </Route>
       <Route exact path="/news"> 
-          <News />
+          <News news={news} />
       </Route>
       </Switch>
  
