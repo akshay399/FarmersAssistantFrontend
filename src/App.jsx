@@ -11,7 +11,18 @@ import { Contact } from "./components/contact";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
 import "./App.css";
-
+import {
+  useLocation,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
+import Signup from "./components/Signup";
+import Crop from "./components/Crop";
+import Fertilizer from "./components/Fertilizer";
+import Disease from "./components/Disease";
+import News from "./components/News";
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
   speedAsDuration: true,
@@ -24,9 +35,13 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <Router>
+    
+      <Switch>
+      <Route exact path="/">
       <Navigation />
-      <Header data={landingPageData.Header} />
+
+        <Header data={landingPageData.Header} />
       <Features data={landingPageData.Features} />
       <About data={landingPageData.About} />
       <Services data={landingPageData.Services} />
@@ -34,7 +49,26 @@ const App = () => {
       <Testimonials data={landingPageData.Testimonials} />
       <Team data={landingPageData.Team} />
       <Contact data={landingPageData.Contact} />
-    </div>
+      </Route>
+     <Route exact path="/signup"> 
+          <Signup />
+      </Route>
+      <Route exact path="/crop"> 
+          <Crop />
+      </Route>
+      <Route exact path="/fertilizer"> 
+          <Fertilizer />
+      </Route>
+      <Route exact path="/disease"> 
+          <Disease />
+      </Route>
+      <Route exact path="/news"> 
+          <News />
+      </Route>
+      </Switch>
+ 
+ 
+    </Router>
   );
 };
 
