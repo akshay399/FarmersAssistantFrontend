@@ -102,7 +102,7 @@ export default function Crop() {
         
   <div className={classes.toolbar} />
             <div className={classes.toolbar} />
-    <h3 style={styles.textCenter}>🌾  Crop Prediction  🌾</h3>
+    {/* <h3 style={styles.textCenter}>🌾  Crop Prediction  🌾</h3> */}
         <div class="form-container">
           <form class="register-form">
             
