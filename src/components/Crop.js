@@ -34,6 +34,7 @@ const styles = {
       color: "white",
       border: "none",
     },
+    
     textCenter: {
       textAlign: "center",
     },

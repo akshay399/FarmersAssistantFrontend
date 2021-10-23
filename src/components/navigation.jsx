@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 export const Navigation = (props) => {
+  const {handleLogout, user} = props;
+  {console.log("this is user in nav", user)}
   return (
     <nav id='menu' className='navbar navbar-default navbar-fixed-top'>
       <div className='container'>
@@ -47,9 +49,11 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
-              <a href='/signup' className='page-scroll'>
+              {user? (<a href='/' onClick={handleLogout} className='page-scroll'>
+                Logout
+              </a>) : (<a href='/signup' className='page-scroll'>
                 Sign up
-              </a>
+              </a>)}
             </li>
           </ul>
         </div>
