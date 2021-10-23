@@ -79,8 +79,11 @@ const App = () => {
 
   const handleSignup = () => {
     clearErrors();
-    console.log("emailalla", email);
-    database.ref("users").push(email)
+    // console.log("emailalla", email);
+    // console.log("usert", user);
+    // database.ref().child(user).set({
+    //   email:email
+    // })
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -96,6 +99,9 @@ const App = () => {
           }
         
       });
+      console.log("emailalla", email);
+    console.log("usert", user);
+    
   };
 
   const handleLogout = () => {
@@ -107,6 +113,15 @@ const App = () => {
       if (user) {
         clearInputs();
         setUser(user);
+        console.log(user.uid)
+        database.ref().child(user.uid).set({
+          email:user.email
+        })
+        var pullEmail 
+        database.ref(user.uid).once("value", (snapshot)=>{
+          pullEmail = snapshot.val().email; 
+        })
+        console.log("pulled from db email", pullEmail)
       } else {
         setUser("");
       }

@@ -90,9 +90,13 @@ export default function Crop() {
       .catch(error=>{
         console.log(error);
       })
-  
-     
-  
+
+    }
+    const getVlue = (e)=>{
+      
+      setNitrogen("72367")
+      
+
     }
   
   
@@ -110,6 +114,7 @@ export default function Crop() {
             <input
               id="nitrogen"
               class="form-field"
+              value={nitrogen}
               type="text"
               placeholder="Nitrogen"
               name="nitrogen"
@@ -163,6 +168,9 @@ export default function Crop() {
             {/* <span id="email-error">Please enter an email address</span> */}
             <button class="form-field" type="submit" onClick={predict}>
               Predict 
+            </button>
+            <button class="form-field" type="button" onClick={getVlue}>
+              Pull live value 
             </button>
           </form>
           
