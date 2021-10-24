@@ -44,6 +44,7 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
+  // const [pulledVlues, setPulledValues] = useState([]);
 
   //cards
   // const [showAdvanced, setShowAdvanced] = useState(true);
@@ -114,7 +115,7 @@ const App = () => {
         clearInputs();
         setUser(user);
         console.log(user.uid)
-        database.ref().child(user.uid).set({
+        database.ref().child(user.uid).update({
           email:user.email
         })
         var pullEmail 
@@ -177,10 +178,10 @@ const App = () => {
               passwordError={passwordError} />
             </Route>) }
       <Route exact path="/crop"> 
-          <Crop />
+          <Crop user={user}  />
       </Route>
       <Route exact path="/fertilizer"> 
-          <Fertilizer />
+          <Fertilizer  user={user}/>
       </Route>
       <Route exact path="/disease"> 
           <Disease />

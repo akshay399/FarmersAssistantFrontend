@@ -4,6 +4,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import "./Crop.css";
 import useStyles from './newsStyles';
+import firebase from 'firebase';
 
 
 
@@ -53,7 +54,9 @@ const styles = {
   },
 };
 
-function Fertilizer() {
+function Fertilizer(props) {
+  var database = firebase.database();
+  const {user} = props;
     const classes = useStyles();
 
     const [nitrogen, setNitrogen] = useState();
@@ -62,6 +65,35 @@ function Fertilizer() {
   const [cropname, setCropname] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [result , setResult] = useState();
+
+  var data 
+  var pulledN
+  var pulledK
+  var pulledP
+
+  const getVlue = (e)=>{
+    var pullP;
+console.log("dot get", database.ref(user.uid).get());
+
+    database.ref(user.uid).on("value", (snapshot)=>{
+       data = snapshot.val();
+      console.log("data", data)
+      for(let i in data){
+        console.log("this is i", i);
+        console.log("in crop for loop", data[i]);
+        pulledN = data['N'] || "4";
+        pulledK = data['K'] || "5"
+        pulledP = data['P'] || "9"
+      }
+      // console.log("snapshot", snapshot);
+      // pullP = snapshot.val().email; 
+    })
+    setPottasium(pulledK);
+    setNitrogen(pulledN) ;
+    setPhosphorous(pulledP);
+    
+
+  }
 
   const predict = (e) =>{
 
@@ -103,6 +135,7 @@ function Fertilizer() {
               id="nitrogen"
               class="form-field"
               type="text"
+              value={nitrogen}
               placeholder="Nitrogen"
               name="nitrogen"
               onChange={(e) => setNitrogen(e.target.value)}
@@ -111,6 +144,7 @@ function Fertilizer() {
               id="phosphorous"
               class="form-field"
               type="text"
+              value={phosphorous}
               placeholder="Phosphorous"
               name="phosphorous"
               onChange={(e) => setPhosphorous(e.target.value)}
@@ -121,6 +155,7 @@ function Fertilizer() {
               id="pottasium"
               class="form-field"
               type="text"
+              value={pottasium}
               placeholder="Pottasium"
               name="pottasium"
               onChange={(e) => setPottasium(e.target.value)}
@@ -140,6 +175,9 @@ function Fertilizer() {
             {/* <span id="email-error">Please enter an email address</span> */}
             <button class="form-field" type="submit" onClick={predict}>
               Predict 
+            </button>
+            <button class="form-field" type="button" onClick={getVlue}>
+              Pull live value 
             </button>
           </form>
         </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import useStyles from './newsStyles';
+import firebase from "firebase";
 
 
 const styles = {
@@ -55,7 +56,9 @@ const styles = {
   };
   
  
-export default function Crop() {
+export default function Crop(props) {
+  var database = firebase.database();
+  const{user} = props;
     const classes = useStyles();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [nitrogen, setNitrogen] = useState();
@@ -65,6 +68,8 @@ export default function Crop() {
     const [ph, setPh] = useState();
     const [rainfall, setRainfall] = useState();
     const [city, setCity] = useState();
+
+    // console.log("user in crop.js", user);
   
     const predict = (e) =>{
   
@@ -92,9 +97,31 @@ export default function Crop() {
       })
 
     }
+    var data 
+    var pulledN
+    var pulledK
+    var pulledP
+
     const getVlue = (e)=>{
-      
-      setNitrogen("72367")
+      var pullP;
+console.log("dot get", database.ref(user.uid).get());
+
+      database.ref(user.uid).on("value", (snapshot)=>{
+         data = snapshot.val();
+        console.log("data", data)
+        for(let i in data){
+          console.log("this is i", i);
+          console.log("in crop for loop", data[i]);
+          pulledN = data['N'] || "4";
+          pulledK = data['K'] || "5"
+          pulledP = data['P'] || "9"
+        }
+        // console.log("snapshot", snapshot);
+        // pullP = snapshot.val().email; 
+      })
+      setPottasium(pulledK);
+      setNitrogen(pulledN) ;
+      setPhosphorous(pulledP);
       
 
     }
@@ -123,6 +150,7 @@ export default function Crop() {
             <input
               id="phosphorous"
               class="form-field"
+              value={phosphorous}
               type="text"
               placeholder="Phosphorous"
               name="phosphorous"
@@ -134,6 +162,7 @@ export default function Crop() {
               id="pottasium"
               class="form-field"
               type="text"
+              value={pottasium}
               placeholder="Pottasium"
               name="pottasium"
               onChange={(e) => setPottasium(e.target.value)}
