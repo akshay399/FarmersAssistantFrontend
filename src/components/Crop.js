@@ -101,6 +101,7 @@ export default function Crop(props) {
     var pulledN
     var pulledK
     var pulledP
+    var pulledph
 
     const getVlue = (e)=>{
       var pullP;
@@ -115,6 +116,7 @@ console.log("dot get", database.ref(user.uid).get());
           pulledN = data['N'] || "4";
           pulledK = data['K'] || "5"
           pulledP = data['P'] || "9"
+          pulledph = data['ph']
         }
         // console.log("snapshot", snapshot);
         // pullP = snapshot.val().email; 
@@ -122,6 +124,7 @@ console.log("dot get", database.ref(user.uid).get());
       setPottasium(pulledK);
       setNitrogen(pulledN) ;
       setPhosphorous(pulledP);
+      setPh(pulledph);
       
 
     }
@@ -172,6 +175,7 @@ console.log("dot get", database.ref(user.uid).get());
             <input
               id="ph"
               class="form-field"
+              value={ph}
               type="text"
               placeholder="ph level"
               name="ph"
