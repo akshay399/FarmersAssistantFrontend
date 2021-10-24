@@ -28,6 +28,7 @@ import Disease from "./components/Disease";
 import News from "./components/News";
 import Dashboard from "./components/Dashboard";
 import database from "mime-db";
+import Visualise from "./components/Visualise";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -188,6 +189,9 @@ const App = () => {
       </Route>
       <Route exact path="/news"> 
           <News news={news} />
+      </Route>
+      <Route exact path="/visualise"> 
+          <Visualise />
       </Route>
       </Switch>
  

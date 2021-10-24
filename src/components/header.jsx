@@ -15,7 +15,7 @@ export const Header = (props) => {
                 <p>{'Plan farming with our tools and increase your crop productivity!'}</p>
                 
                 <a
-                  href='#features'
+                  href='/visualise'
                   className='btn btn-custom btn-lg page-scroll'
                 >
                   {user ? `Get Data` : `Learn More`}
