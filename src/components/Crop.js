@@ -7,6 +7,8 @@ import useStyles from './newsStyles';
 import firebase from "firebase";
 
 
+
+
 const styles = {
     container: {
       display: "flex",
