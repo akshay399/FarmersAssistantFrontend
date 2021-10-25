@@ -69,11 +69,14 @@ export default function Visualise(props) {
             <div className={classes.toolbar} />
             <div className={classes.toolbar} />
            
-           <div className={styles.container}>
+           <div style={{display:"flex",
+                justifyContent:"center"}}>
             <Chart 
-
-                width={400}
-                height={300}
+                // paddingTop="200"  
+                // marginLeft="20px"
+                
+                width={800}
+                height={600}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
