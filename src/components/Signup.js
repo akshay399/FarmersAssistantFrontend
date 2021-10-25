@@ -28,7 +28,6 @@ const Signup = (props) => {
   return (
     <>
     <div className={classes.toolbar} />
-            {/* <div className={classes.toolbar} /> */}
     <section className="login">
       <div className="loginContainer">
         <label>Email</label>
@@ -59,7 +58,7 @@ const Signup = (props) => {
             </>
           ) : (
             <>
-             <Link to="/dashboard"> <button className="loginButton button2" onClick={handleSignup}>Sign Up</button></Link>
+             <button className="loginButton button2" onClick={handleSignup}>Sign Up</button>
               <p>
                 Have an account?
                 <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span>
