@@ -191,7 +191,7 @@ const App = () => {
           <News news={news} />
       </Route>
       <Route exact path="/visualise"> 
-          <Visualise />
+          <Visualise user = {user} />
       </Route>
       </Switch>
  
