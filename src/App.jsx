@@ -159,11 +159,11 @@ const App = () => {
         <Header user={user}  />
       <Features data={landingPageData.Features} />
       <About data={landingPageData.About} />
-      <Services data={landingPageData.Services} />
-      <Gallery data={landingPageData.Gallery}/>
-      <Testimonials data={landingPageData.Testimonials} />
-      <Team data={landingPageData.Team} />
-      <Contact data={landingPageData.Contact} />
+      {/* <Services data={landingPageData.Services} /> */}
+      {/* <Gallery data={landingPageData.Gallery}/> */}
+      {/* <Testimonials data={landingPageData.Testimonials} /> */}
+      {/* <Team data={landingPageData.Team} /> */}
+      {/* <Contact data={landingPageData.Contact} /> */}
       </Route>
       {user ?( <Route exact path="/dashboard"><Dashboard  user={user} handleLogout={handleLogout}/></Route>
 ) : (<Route exact path="/signup">
