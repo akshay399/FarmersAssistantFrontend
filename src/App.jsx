@@ -14,12 +14,14 @@ import SmoothScroll from "smooth-scroll";
 import fire from "./fire";
 import firebase from "firebase";
 import "./App.css";
+import Loader from "./components/Loader";
+
 import {
   useLocation,
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory
+  useHistory,
 } from "react-router-dom";
 import Signup from "./components/Signup";
 import Crop from "./components/Crop";
@@ -37,6 +39,7 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 const App = () => {
   var database = firebase.database();
+  const [loading, setLoading] = useState(true);
   //login
   const db = fire.database;
   const [user, setUser] = useState("");
@@ -45,10 +48,6 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
-  // const [pulledVlues, setPulledValues] = useState([]);
-
-  //cards
-  // const [showAdvanced, setShowAdvanced] = useState(true);
 
   const clearInputs = () => {
     setEmail("");
@@ -98,12 +97,10 @@ const App = () => {
           case "auth/weak-password":
             setPasswordError(err.message);
             break;
-          }
-        
+        }
       });
-      console.log("emailalla", email);
+    console.log("emailalla", email);
     console.log("usert", user);
-    
   };
 
   const handleLogout = () => {
@@ -115,15 +112,15 @@ const App = () => {
       if (user) {
         clearInputs();
         setUser(user);
-        console.log(user.uid)
+        console.log(user.uid);
         database.ref().child(user.uid).update({
-          email:user.email
-        })
-        var pullEmail 
-        database.ref(user.uid).once("value", (snapshot)=>{
-          pullEmail = snapshot.val().email; 
-        })
-        console.log("pulled from db email", pullEmail)
+          email: user.email,
+        });
+        var pullEmail;
+        database.ref(user.uid).once("value", (snapshot) => {
+          pullEmail = snapshot.val().email;
+        });
+        console.log("pulled from db email", pullEmail);
       } else {
         setUser("");
       }
@@ -141,6 +138,9 @@ const App = () => {
       "https://farmers-assistant-backend.herokuapp.com/news"
     );
     setNews(res.data);
+
+    setLoading(false);
+
     console.log(res.data);
   };
 
@@ -151,23 +151,26 @@ const App = () => {
 
   return (
     <Router>
-    
       <Navigation user={user} handleLogout={handleLogout} />
       <Switch>
-      <Route exact path="/">
-
-        <Header user={user}  />
-      <Features data={landingPageData.Features} />
-      <About data={landingPageData.About} />
-      {/* <Services data={landingPageData.Services} /> */}
-      {/* <Gallery data={landingPageData.Gallery}/> */}
-      {/* <Testimonials data={landingPageData.Testimonials} /> */}
-      {/* <Team data={landingPageData.Team} /> */}
-      {/* <Contact data={landingPageData.Contact} /> */}
-      </Route>
-      {user ?( <Route exact path="/dashboard"><Dashboard  user={user} handleLogout={handleLogout}/></Route>
-) : (<Route exact path="/signup">
-              <Signup emial={email}
+        <Route exact path="/">
+          <Header user={user} />
+          <Features data={landingPageData.Features} />
+          <About data={landingPageData.About} />
+          {/* <Services data={landingPageData.Services} /> */}
+          {/* <Gallery data={landingPageData.Gallery}/> */}
+          {/* <Testimonials data={landingPageData.Testimonials} /> */}
+          {/* <Team data={landingPageData.Team} /> */}
+          {/* <Contact data={landingPageData.Contact} /> */}
+        </Route>
+        {user ? (
+          <Route exact path="/dashboard">
+            <Dashboard user={user} handleLogout={handleLogout} />
+          </Route>
+        ) : (
+          <Route exact path="/signup">
+            <Signup
+              emial={email}
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
@@ -176,26 +179,26 @@ const App = () => {
               hasAccount={hasAccount}
               setHasAccount={setHasAccount}
               emailError={emailError}
-              passwordError={passwordError} />
-            </Route>) }
-      <Route exact path="/crop"> 
-          <Crop user={user}  />
-      </Route>
-      <Route exact path="/fertilizer"> 
-          <Fertilizer  user={user}/>
-      </Route>
-      <Route exact path="/disease"> 
+              passwordError={passwordError}
+            />
+          </Route>
+        )}
+        <Route exact path="/crop">
+          <Crop user={user} />
+        </Route>
+        <Route exact path="/fertilizer">
+          <Fertilizer user={user} />
+        </Route>
+        <Route exact path="/disease">
           <Disease />
-      </Route>
-      <Route exact path="/news"> 
-          <News news={news} />
-      </Route>
-      <Route exact path="/visualise"> 
-          <Visualise user = {user} />
-      </Route>
+        </Route>
+        <Route exact path="/news">
+          {!loading ? <News news={news} /> : <Loader />}
+        </Route>
+        <Route exact path="/visualise">
+          <Visualise user={user} />
+        </Route>
       </Switch>
- 
- 
     </Router>
   );
 };

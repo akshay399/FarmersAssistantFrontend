@@ -1,0 +1,23 @@
+#image_api {
+  width: 25%;
+}
+
+input[type="file"] {
+  display: none;
+}
+label {
+  color: white;
+  height: 60px;
+  width: 250px;
+  background-color: #38b000;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 60;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

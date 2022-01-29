@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-import useStyles from './newsStyles';
-
+import Button from "@mui/material/Button";
+import useStyles from "./newsStyles";
+import "./Disease.css";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import {
   useLocation,
   BrowserRouter as Router,
@@ -14,35 +16,31 @@ import {
 } from "react-router-dom";
 
 const customStyles = {
-    content: {
-      maxheight: "500px",
-      maxwidth: "500px",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-    inp:{
-        textAlign: "center",
-  margin: "auto",
-    },
-    center: {
-        margin: "50",
-        width: "50%",
-        border: "3px solid green",
-        padding: "10px",
-      }
-  };
+  content: {
+    maxheight: "500px",
+    maxwidth: "500px",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+  inp: {
+    textAlign: "center",
+    margin: "auto",
+  },
+  center: {
+    margin: "50",
+    width: "50%",
+    border: "3px solid green",
+    padding: "10px",
+  },
+};
 
 export default function Disease() {
-    const history = useHistory();
-    const classes = useStyles();
-  // const routeChange = () => {
-  //   let path = `disease_result`;
-  //   history.push(path);
-  // };
+  const history = useHistory();
+  const classes = useStyles();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
   const [cause, setCause] = useState("");
@@ -91,31 +89,44 @@ export default function Disease() {
 
   return (
     <>
-     <div className={classes.toolbar} />
-            <div className={classes.toolbar} />
+      <div className={classes.toolbar} />
+      <div className={classes.toolbar} />
       <h3 style={styles.textCenter}>🌾Disease Detection🌾</h3>
       <div className="m-3">
-          <div style={customStyles.center}>
-        <input className="inp" type="file" name="file" id="image" onChange={imageChange} />
-</div>
-        {selectedImage && (
-          <div style={styles.preview}>
-            <img
-              id="image_api"
-              src={URL.createObjectURL(selectedImage)}
-              style={styles.image}
-              alt="Thumb"
-            />
-            <br />
-            <button onClick={getHealth} style={styles.upload}>
-              Analyse the disease
-            </button>
-            <br />
-            <button onClick={removeSelectedImage} style={styles.delete}>
-              Remove This Image
-            </button>
-          </div>
-        )}
+        {/* <div style={customStyles.center}> */}
+        <div>
+          <input
+            className="inp"
+            id="file"
+            type="file"
+            name="file"
+            // id="image"
+            onChange={imageChange}
+          />
+          <label for="file">
+            <AddAPhotoIcon /> &nbsp; Choose a photo
+          </label>
+        </div>
+        <div>
+          {selectedImage && (
+            <div style={styles.preview}>
+              <img
+                id="image_api"
+                src={URL.createObjectURL(selectedImage)}
+                style={styles.image}
+                alt="Thumb"
+              />
+              <br />
+              <button onClick={getHealth} style={styles.upload}>
+                Analyse the disease
+              </button>
+              <br />
+              <button onClick={removeSelectedImage} style={styles.delete}>
+                Remove This Image
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       <Modal style={customStyles} isOpen={modalIsOpen}>
         <h3
@@ -146,12 +157,19 @@ export default function Disease() {
         {/* <p>crop: {crop}</p> */}
         <div>
           {" "}
-          <button onClick={() => setModalIsOpen(false)}> Close</button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => setModalIsOpen(false)}
+          >
+            {" "}
+            Close
+          </Button>
         </div>
       </Modal>
     </>
   );
-};
+}
 
 // export default App;
 
@@ -165,9 +183,13 @@ const styles = {
     paddingTop: 50,
   },
   preview: {
-    marginTop: 50,
+    position: "relative",
+    top: "200px",
+    // marginTop: 0,
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: { maxWidth: "100%", maxHeight: 320 },
   delete: {
@@ -176,13 +198,15 @@ const styles = {
     background: "red",
     color: "white",
     border: "none",
+    width: "25%",
   },
   upload: {
     cursor: "pointer",
     padding: 15,
-    background: "green",
+    background: "#38b000",
     color: "white",
     border: "none",
+    width: "25%",
   },
   textCenter: {
     textAlign: "center",
