@@ -4,11 +4,10 @@ export const Features = (props) => {
   return (
     <div id='features' className='text-center'>
       <div className='container'>
-        <div className='col-md-10 col-md-offset-1 section-title'>
-          <h2 style={{paddingTop:"5rem", color:"black"}}>Our website will help you answer following questions:
-</h2>
+        <div className="section-title">
+          <h2 style={{paddingTop:"5rem", color:"black"   , fontSize: 28,}}>Our website will help you answer following questions</h2>
         </div>
-        <div className='row'>
+        <div className='row' style={{ marginBottom: "70px"}}>
           {props.data
             ? props.data.map((d, i) => (
                 <div key={`${d.title}-${i}`} className='col-xs-6 col-md-3'>

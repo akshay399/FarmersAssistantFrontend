@@ -162,22 +162,22 @@
   "Features": [
     {
       "icon": "fa fa-comments-o",
-      "title": "1. What crop to plant here?",
+      "title": "What crop to plant here?",
       "text": " "
     },
     {
       "icon": "fa fa-bullhorn",
-      "title": "2. What fertilizer to use?",
+      "title": "What fertilizer to use?",
       "text": " "
     },
     {
       "icon": "fa fa-group",
-      "title": "3. Which disease do your crop have?",
+      "title": "Is my crop unhealthy?",
       "text": " "
     },
     {
       "icon": "fa fa-magic",
-      "title": "4. How to cure the disease?",
+      "title": "How to cure the disease?",
       "text": " "
     }
   ]
