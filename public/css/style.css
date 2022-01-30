@@ -207,14 +207,15 @@ a:focus,
 .intro {
   display: table;
   width: 100%;
-  padding: 0;
+  padding: 0px;
   /* background: url(../img/intro-bg.jpg) center center no-repeat; */
-  background: url(../img/farm-image.jpg) center center no-repeat;
+  background: url(../img/farm-image-new-2.jpg) center center no-repeat;
   background-color: #e5e5e5;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
+  object-fit: cover;
 }
 
 .intro .overlay {
