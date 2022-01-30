@@ -199,6 +199,9 @@ const App = () => {
           <Visualise user={user} />
         </Route>
       </Switch>
+      {/* <Route exact path="/">
+        <Contact></Contact>
+      </Route> */}
     </Router>
   );
 };

@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import "./Crop.css";
-import useStyles from './newsStyles';
-import firebase from 'firebase';
-
-
+import useStyles from "./newsStyles";
+import firebase from "firebase";
+import Button from "@mui/material/Button";
 
 const customStyles = {
   content: {
@@ -56,132 +55,126 @@ const styles = {
 
 function Fertilizer(props) {
   var database = firebase.database();
-  const {user} = props;
-    const classes = useStyles();
+  const { user } = props;
+  const classes = useStyles();
 
-    const [nitrogen, setNitrogen] = useState();
+  const [nitrogen, setNitrogen] = useState();
   const [phosphorous, setPhosphorous] = useState();
   const [pottasium, setPottasium] = useState();
   const [cropname, setCropname] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [result , setResult] = useState();
+  const [result, setResult] = useState();
 
-  var data 
-  var pulledN
-  var pulledK
-  var pulledP
+  var data;
+  var pulledN;
+  var pulledK;
+  var pulledP;
 
-  const getVlue = (e)=>{
+  const getVlue = (e) => {
     var pullP;
-console.log("dot get", database.ref(user.uid).get());
+    console.log("dot get", database.ref(user.uid).get());
 
-    database.ref(user.uid).on("value", (snapshot)=>{
-       data = snapshot.val();
-      console.log("data", data)
-      for(let i in data){
+    database.ref(user.uid).on("value", (snapshot) => {
+      data = snapshot.val();
+      console.log("data", data);
+      for (let i in data) {
         console.log("this is i", i);
         console.log("in crop for loop", data[i]);
-        pulledN = data['N'] || "4";
-        pulledK = data['K'] || "5"
-        pulledP = data['P'] || "9"
+        pulledN = data["N"] || "4";
+        pulledK = data["K"] || "5";
+        pulledP = data["P"] || "9";
       }
       // console.log("snapshot", snapshot);
-      // pullP = snapshot.val().email; 
-    })
+      // pullP = snapshot.val().email;
+    });
     setPottasium(pulledK);
-    setNitrogen(pulledN) ;
+    setNitrogen(pulledN);
     setPhosphorous(pulledP);
-    
+  };
 
-  }
-
-  const predict = (e) =>{
-
+  const predict = (e) => {
     e.preventDefault();
-   
+
     var sendObj = {
-      nitrogen:nitrogen,
-      pottasium:pottasium,
-     phosphorous:phosphorous,
-      cropname:cropname
-
-    }
+      nitrogen: nitrogen,
+      pottasium: pottasium,
+      phosphorous: phosphorous,
+      cropname: cropname,
+    };
     console.log(sendObj);
-    axios.post('https://farmers-assistant-backend.herokuapp.com/fertilizer-predict',sendObj).then(response=>{
-      console.log("add this",response.data.fertilizer );
-      setResult(response.data.fertilizer)
-      setModalIsOpen(true);
+    axios
+      .post(
+        "https://farmers-assistant-backend.herokuapp.com/fertilizer-predict",
+        sendObj
+      )
+      .then((response) => {
+        console.log("add this", response.data.fertilizer);
+        setResult(response.data.fertilizer);
+        setModalIsOpen(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  return (
+    <>
+      {/* <Header navPosition="right" className="reveal-from-bottom" /> */}
+      <div className={classes.toolbar} />
+      <div className={classes.toolbar} />
+      {/* <h3 style={styles.textCenter}>🌾Fertilizer Recommendation 🌾</h3> */}
+      <div class="form-container">
+        <form class="register-form">
+          {/* <div class="success-message">Success! Thank you for registering</div> */}
+          <input
+            id="nitrogen"
+            class="form-field"
+            type="text"
+            value={nitrogen}
+            placeholder="Nitrogen"
+            name="nitrogen"
+            onChange={(e) => setNitrogen(e.target.value)}
+          />
+          <input
+            id="phosphorous"
+            class="form-field"
+            type="text"
+            value={phosphorous}
+            placeholder="Phosphorous"
+            name="phosphorous"
+            onChange={(e) => setPhosphorous(e.target.value)}
+          />
 
+          {/* <span id="first-name-error">Please enter a first name</span> */}
+          <input
+            id="pottasium"
+            class="form-field"
+            type="text"
+            value={pottasium}
+            placeholder="Pottasium"
+            name="pottasium"
+            onChange={(e) => setPottasium(e.target.value)}
+          />
 
+          {/* <span id="last-name-error">Please enter a last name</span> */}
+          <input
+            id="cropname"
+            class="form-field"
+            type="text"
+            placeholder="Crop name"
+            name="cropname"
+            onChange={(e) => setCropname(e.target.value)}
+          />
 
-    })
-    .catch(error=>{
-      console.log(error);
-    })
-
-   
-
-  }
-    return (
-        <>
-        {/* <Header navPosition="right" className="reveal-from-bottom" /> */}
-        <div className={classes.toolbar} />
-        <div className={classes.toolbar} />
-        {/* <h3 style={styles.textCenter}>🌾Fertilizer Recommendation 🌾</h3> */}
-        <div class="form-container">
-          <form class="register-form">
-            {/* <div class="success-message">Success! Thank you for registering</div> */}
-            <input
-              id="nitrogen"
-              class="form-field"
-              type="text"
-              value={nitrogen}
-              placeholder="Nitrogen"
-              name="nitrogen"
-              onChange={(e) => setNitrogen(e.target.value)}
-            />
-            <input
-              id="phosphorous"
-              class="form-field"
-              type="text"
-              value={phosphorous}
-              placeholder="Phosphorous"
-              name="phosphorous"
-              onChange={(e) => setPhosphorous(e.target.value)}
-            />
-  
-            {/* <span id="first-name-error">Please enter a first name</span> */}
-            <input
-              id="pottasium"
-              class="form-field"
-              type="text"
-              value={pottasium}
-              placeholder="Pottasium"
-              name="pottasium"
-              onChange={(e) => setPottasium(e.target.value)}
-            />
-  
-            {/* <span id="last-name-error">Please enter a last name</span> */}
-            <input
-              id="cropname"
-              class="form-field"
-              type="text"
-              placeholder="Crop name"
-              name="cropname"
-              onChange={(e) => setCropname(e.target.value)}
-            />
-            
-  
-            {/* <span id="email-error">Please enter an email address</span> */}
-            <button class="form-field" type="submit" onClick={predict}>
-              Predict 
-            </button>
-            <button class="form-field" type="button" onClick={getVlue}>
-              Pull live value 
-            </button>
-          </form>
-        </div>
-        <Modal style={customStyles} isOpen={modalIsOpen}>
+          {/* <span id="email-error">Please enter an email address</span> */}
+          <button class="form-field" type="submit" onClick={predict}>
+            Predict
+          </button>
+          <button class="form-field" type="button" onClick={getVlue}>
+            Pull live value
+          </button>
+        </form>
+      </div>
+      <Modal style={customStyles} isOpen={modalIsOpen}>
         <h3
           style={{
             color: "#38b000",
@@ -193,15 +186,23 @@ console.log("dot get", database.ref(user.uid).get());
         >
           Result:
         </h3>
-        <p dangerouslySetInnerHTML = {{__html : result}}/>
+        <b dangerouslySetInnerHTML={{ __html: result }} />
 
         <div>
           {" "}
-          <button onClick={() => setModalIsOpen(false)}> Close</button>
+          <Button
+            variant="contained"
+            color="success"
+            style={{ marginTop: "40" }}
+            onClick={() => setModalIsOpen(false)}
+          >
+            {" "}
+            Close
+          </Button>
         </div>
       </Modal>
-      </>
-    )
+    </>
+  );
 }
 
-export default Fertilizer
+export default Fertilizer;

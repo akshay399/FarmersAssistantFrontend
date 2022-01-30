@@ -202,6 +202,7 @@ const styles = {
   },
   upload: {
     cursor: "pointer",
+    margin: 10,
     padding: 15,
     background: "#38b000",
     color: "white",
