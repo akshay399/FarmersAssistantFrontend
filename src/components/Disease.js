@@ -14,7 +14,19 @@ import {
   useHistory,
   Link,
 } from "react-router-dom";
-
+import data from "../data/planet.json";
+console.log("type of data", data);
+Object.keys(data).map((ele, i) => console.log("hi", data[ele].title));
+var stringg = JSON.stringify(data);
+console.log("beforee", stringg);
+stringg = replaceAll(stringg, '</p>","<p>', "<p></p>");
+stringg = replaceAll(stringg, '</li>","<li>', "</li> <li>");
+// stringg = stringg.replace(/</p>","<p>/g, "</p><p>");
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, "g"), replace);
+}
+console.log("afterrr", stringg);
+var new_data = JSON.parse(stringg);
 const customStyles = {
   content: {
     maxheight: "500px",
@@ -92,39 +104,92 @@ export default function Disease() {
       <div className={classes.toolbar} />
       <div className={classes.toolbar} />
       <h3 style={styles.textCenter}>🌾Disease Detection🌾</h3>
-      <div className="m-3">
-        {/* <div style={customStyles.center}> */}
-        <div>
-          <input
-            className="inp"
-            id="file"
-            type="file"
-            name="file"
-            // id="image"
-            onChange={imageChange}
-          />
-          <label for="file">
-            <AddAPhotoIcon /> &nbsp; Choose a photo
-          </label>
+      <div>
+        <div className="m-3">
+          {/* <div style={customStyles.center}> */}
+          <div>
+            <input
+              className="inp"
+              id="file"
+              type="file"
+              name="file"
+              // id="image"
+              onChange={imageChange}
+            />
+            <label for="file">
+              <AddAPhotoIcon /> &nbsp; Choose a photo
+            </label>
+          </div>
+          <div>
+            {selectedImage && (
+              <div style={styles.preview}>
+                <img
+                  id="image_api"
+                  src={URL.createObjectURL(selectedImage)}
+                  style={styles.image}
+                  alt="Thumb"
+                />
+                <br />
+                <button onClick={getHealth} style={styles.upload}>
+                  Analyse the disease
+                </button>
+                <br />
+                <button onClick={removeSelectedImage} style={styles.delete}>
+                  Remove This Image
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        <div>
-          {selectedImage && (
-            <div style={styles.preview}>
-              <img
-                id="image_api"
-                src={URL.createObjectURL(selectedImage)}
-                style={styles.image}
-                alt="Thumb"
-              />
-              <br />
-              <button onClick={getHealth} style={styles.upload}>
-                Analyse the disease
-              </button>
-              <br />
-              <button onClick={removeSelectedImage} style={styles.delete}>
-                Remove This Image
-              </button>
-            </div>
+        <div className="scraped-text" style={{ margin: "40px" }}>
+          <h1>hi</h1>
+          {data.length != 0 && (
+            <ul style={{ color: "white", listStyleType: "none" }}>
+              {Object.keys(new_data).map((ele, i) => (
+                <li key={i} className="mb-6">
+                  <p>
+                    <h1>{new_data[ele].title}</h1>
+                    <img
+                      style={{ width: "100px" }}
+                      src={new_data[ele].image}
+                    ></img>
+                    <p>
+                      data:
+                      <div
+                        dangerouslySetInnerHTML={{ __html: new_data[ele].data }}
+                      ></div>
+                    </p>
+
+                    <u>Treatment:</u>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: new_data[ele].treatment,
+                      }}
+                    ></div>
+                    <u>CURE AND PRODUCTS</u>
+                    <ul>
+                      {new_data[ele].products.map((one) => {
+                        <li>
+                          {console.log("hello", one.title)}
+                          <h2>{one.title}</h2>;
+                        </li>;
+                      })}
+                    </ul>
+                    {/* <div
+                      dangerouslySetInnerHTML={{
+                        __html: new_data[ele].products.map((one) => {
+                          {
+                            console.log("yoihdcsdk", one.title);
+                            one.title;
+                          }
+                        }),
+                      }}
+                    ></div> */}
+                    <hr style={{ width: "100%" }}></hr>
+                  </p>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       </div>

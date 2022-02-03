@@ -8,12 +8,107 @@ body {
   align-items: center;
 }
 
-.form-container {
-  width: 360px;
-  background-color: white;
-  margin: auto;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+.about-text li {
+  margin-bottom: 6px;
+  margin-left: 6px;
+  list-style: none;
+  padding: 0;
+  float: right;
+  color: black;
+  font-size: 30px;
+}
+.about-text li:before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  /* color: white; */
+  color: #38b000;
+  font-size: 20px;
+  font-weight: 300;
+  padding-right: 8px;
+  margin-bottom: 20px;
+}
+
+/* using flex */
+/* .main__container {
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.trial {
+  height: 400px;
+  background-color: transparent;
+  flex: 2;
+  order: 2;
+  align-items: flex-end;
+  background-color: #00b712;
+  background-image: linear-gradient(315deg, #00b712 0%, #38b000 74%);
+  margin: 50px;
+}
+.form-container {
+  margin: 10px;
+
+  order: 1;
+  flex-basis: 75%;
+  flex: 1;
+  background-color: white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  margin-top: -25px;
+  padding: 10px;
+  align-items: right;
+} */
+/* using flex ends  */
+/* ========================================== */
+
+/* using grids */
+.main__container {
+  padding: 40px;
+  display: grid;
+  margin-top: -50px;
+  grid-template-columns: 1fr 1.5fr;
+  /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
+  grid-column-gap: 100px;
+}
+.trial {
+  background-color: transparent;
+  order: 2;
+  align-items: flex-end;
+  background-color: #00b712;
+  /* background-image: linear-gradient(315deg, #00b712 0%, #38b000 74%); */
+  background: url(/src/farm-image.png) no-repeat;
+  /* background-size: contain; */
+
+  /* margin: 50px; */
+}
+/* .trial img {
+ 
+} */
+.trial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: span 0.5;
+}
+.form-container {
+  margin: 10px;
+  order: 1;
+  background-color: white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  /* margin-top: -25px; */
+  /* padding: 10px; */
+  align-items: right;
+}
+/* using grids ends*/
+
+.trial2 {
+  flex: 1;
+  order: 3;
+  align-items: flex-end;
+}
+@media (max-width: 768px) {
+  .main__container {
+    flex-direction: column;
+  }
 }
 
 .register-form {

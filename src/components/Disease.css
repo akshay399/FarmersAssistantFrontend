@@ -21,3 +21,13 @@ label {
   justify-content: center;
   align-items: center;
 }
+
+.scraped-text li:before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  color: #38b000;
+  font-size: 12px;
+  font-weight: 300;
+  padding-right: 8px;
+  margin-bottom: 50px;
+}
