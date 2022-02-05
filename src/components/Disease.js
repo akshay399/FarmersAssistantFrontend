@@ -18,14 +18,14 @@ import data from "../data/planet.json";
 console.log("type of data", data);
 Object.keys(data).map((ele, i) => console.log("hi", data[ele].title));
 var stringg = JSON.stringify(data);
-console.log("beforee", stringg);
+// console.log("beforee", stringg);
 stringg = replaceAll(stringg, '</p>","<p>', "<p></p>");
 stringg = replaceAll(stringg, '</li>","<li>', "</li> <li>");
 // stringg = stringg.replace(/</p>","<p>/g, "</p><p>");
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, "g"), replace);
 }
-console.log("afterrr", stringg);
+// console.log("afterrr", stringg);
 var new_data = JSON.parse(stringg);
 const customStyles = {
   content: {

@@ -31,6 +31,7 @@ import News from "./components/News";
 import Dashboard from "./components/Dashboard";
 import database from "mime-db";
 import Visualise from "./components/Visualise";
+import DiseasePortal from "./components/DiseasePortal";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -188,6 +189,9 @@ const App = () => {
         </Route>
         <Route exact path="/fertilizer">
           <Fertilizer user={user} />
+        </Route>
+        <Route exact path="/disease-portal">
+          <DiseasePortal />
         </Route>
         <Route exact path="/disease">
           <Disease />

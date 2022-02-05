@@ -9,10 +9,10 @@ import Button from "@mui/material/Button";
 import data from "../data/planet.json";
 console.log("planet json", data);
 var temp = "";
-data.map((ele) => {
-  console.log("single ele", ele.data[0]);
-  temp = ele.data[0];
-});
+// data.map((ele) => {
+//   console.log("single ele", ele.data[0]);
+//   temp = ele.data[0];
+// });
 
 const styles = {
   container: {
