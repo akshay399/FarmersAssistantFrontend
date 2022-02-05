@@ -54,13 +54,14 @@ function DiseasePortal() {
                     }}
                   ></div>
                   <u>CURE AND PRODUCTS</u>
-                  {new_data[ele].products.map((one) => {
-                    <>
-                      {console.log("hello", one.title)}
-                      <h3 style={{ color: "red" }}>kgdjadgj</h3>
-                      <h2>{one.title}</h2>; ;
-                    </>;
-                  })}
+                  <ul>
+                    {new_data[ele].products.map((one) => {
+                      <li>
+                        {console.log("hello", one.title)}
+                        <h2>{one.title}</h2>;
+                      </li>;
+                    })}
+                  </ul>
 
                   <hr style={{ width: "100%" }}></hr>
                 </p>

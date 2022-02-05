@@ -170,7 +170,7 @@ export default function Disease() {
                     <ul>
                       {new_data[ele].products.map((one) => {
                         <li>
-                          {console.log("hello", one.title)}
+                          {/* {console.log("hello", one.title)} */}
                           <h2>{one.title}</h2>;
                         </li>;
                       })}
