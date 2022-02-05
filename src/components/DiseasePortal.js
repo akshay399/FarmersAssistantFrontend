@@ -56,10 +56,10 @@ function DiseasePortal() {
                   <u>CURE AND PRODUCTS</u>
                   <ul>
                     {new_data[ele].products.map((one) => {
-                      <li>
-                        {console.log("hello", one.title)}
-                        <h2>{one.title}</h2>;
-                      </li>;
+                      
+                        {console.log("hello123", one.title)}
+                        return <h3>{one.title}</h3>
+                      
                     })}
                   </ul>
 
