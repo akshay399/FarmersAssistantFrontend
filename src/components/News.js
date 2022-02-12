@@ -58,6 +58,7 @@ export default function News({ news }) {
       <Grid container justifyContent="center" spacing={3}>
         {news.map((item) => (
           <>
+            {console.log("hiii", item)}
             <Grid key={item.id} item xs={12} sm="auto" md="auto" lg="auto">
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
