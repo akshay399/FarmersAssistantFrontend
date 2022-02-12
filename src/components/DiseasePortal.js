@@ -12,7 +12,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import "./DiseasePortal.css";
 import Modal from "react-modal";
-// import Carousel from "react-material-ui-carousel";
+import { Paper } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 console.log("type of data", data);
 Object.keys(data).map((ele, i) => console.log("hi", data[ele].title));
 var stringg = JSON.stringify(data);
@@ -31,8 +32,8 @@ new_data.map((ele, i) => {
 console.log("cut down", propertyValues);
 const customStyles = {
   content: {
-    maxheight: "500px",
-    maxwidth: "500px",
+    // maxheight: "500px",
+    // maxwidth: "500px",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -74,10 +75,16 @@ const styles = {
   },
 };
 function DiseasePortal() {
+  const [treat, setTreat] = useState("");
   const classes = useStyles();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [productModalIsOpen, setProductModalIsOpen] = useState(false);
   const treatment = () => {
+    alert("work");
     setModalIsOpen(true);
+  };
+  const displayProducts = () => {
+    setProductModalIsOpen(true);
   };
 
   return (
@@ -133,112 +140,150 @@ function DiseasePortal() {
                     Treatments
                   </Button>
                   <Button
-                    // href={item.link}
                     target="_blank"
                     size="small"
                     variant="contained"
                     style={{ padding: "10px" }}
+                    onClick={displayProducts}
                   >
                     Products
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
+            <Modal isOpen={modalIsOpen}>
+              <>
+                <div style={{ marginTop: "40px" }} />
+                <h3
+                  style={{
+                    color: "#38b000",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  Treatment:
+                </h3>
+
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: new_data[ele].treatment,
+                  }}
+                >
+                  {console.log("jaja", ele)}
+                </div>
+                <div>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    color="success"
+                    style={{ marginTop: "40", marginBottom: "20" }}
+                    onClick={() => setModalIsOpen(false)}
+                  >
+                    {" "}
+                    Close
+                  </Button>
+                </div>
+              </>
+            </Modal>
+            <Modal
+              // style={{ width: "80px" }}
+              // style={
+              //   (customStyles, { width: "auto", height: "auto", padding: "50px" })
+              // }
+              isOpen={productModalIsOpen}
+            >
+              <>
+                <div style={{ marginTop: "40px" }} />
+                <h3
+                  style={{
+                    color: "#38b000",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  PRODUCTS:
+                </h3>
+                <Carousel
+                  onClick={treatment}
+                  style={{ marginTop: "50px", height: "auto" }}
+                >
+                  {new_data[ele].products.map((one, i) => {
+                    return (
+                      <>
+                        <img style={{ height: "auto" }} src={one.image}></img>
+                        <p>{one.title}</p>
+                        <a herf={one.link}>Get the product</a>
+                      </>
+                    );
+                  })}
+                </Carousel>
+                <div>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    color="success"
+                    style={{ marginTop: "40", marginBottom: "20" }}
+                    onClick={() => setProductModalIsOpen(false)}
+                  >
+                    {" "}
+                    Close
+                  </Button>
+                </div>
+              </>
+            </Modal>
           </>
         ))}
       </Grid>
-      {/* <CardMedia
-          component="img"
-          alt="green iguana"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions> */}
-      {/* </Card> */}
-      {/* <div className="scraped-text" style={{ margin: "40px" }}>
-        {data.length != 0 && (
-          <ul style={{ color: "white", listStyleType: "none" }}>
-            {Object.keys(new_data).map((ele, i) => (
-              <li key={i} className="mb-6">
-                <p>
-                  <h1>{new_data[ele].title}</h1>
-                  <img
-                    style={{ width: "100px" }}
-                    src={new_data[ele].image}
-                  ></img>
-                  <p>
-                    data:
-                    <div
-                      dangerouslySetInnerHTML={{ __html: new_data[ele].data }}
-                    ></div>
-                  </p>
 
-                  <u>Treatment:</u>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: new_data[ele].treatment,
-                    }}
-                  ></div>
-                  <u>CURE AND PRODUCTS</u>
-                  <ul>
-                    {new_data[ele].products.map((one) => {
-                      {
-                        console.log("hello123", one.title);
-                      }
-                      return (
-                        <>
-                          <img src={one.image}></img>
-                          <p>{one.title}</p>
-                        </>
-                      );
-                    })}
-                  </ul>
-
-                  <hr style={{ width: "100%" }}></hr>
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> */}
-      <Modal style={customStyles} isOpen={modalIsOpen}>
-        <h3
-          style={{
-            color: "#38b000",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-        >
-          Result:
-        </h3>
-
-        <div>
-          {" "}
-          <Button
-            variant="contained"
-            color="success"
-            style={{ marginTop: "40" }}
-            onClick={() => setModalIsOpen(false)}
+      {/* <Modal
+        // style={{ width: "80px" }}
+        // style={
+        //   (customStyles, { width: "auto", height: "auto", padding: "50px" })
+        // }
+        isOpen={productModalIsOpen}
+      >
+        <>
+          <div style={{ marginTop: "40px" }} />
+          <h3
+            style={{
+              color: "#38b000",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
           >
+            PRODUCTS:
+          </h3>
+          <Carousel style={{ marginTop: "50px", height: "auto" }}>
+            {Object.keys(new_data).map((ele, i) => {
+              return (
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: new_data[ele].treatment,
+                  }}
+                ></p>
+              );
+            })}
+          </Carousel>
+          <div>
             {" "}
-            Close
-          </Button>
-        </div>
-      </Modal>
+            <Button
+              variant="contained"
+              color="success"
+              style={{ marginTop: "40", marginBottom: "20" }}
+              onClick={() => setModalIsOpen(false)}
+            >
+              {" "}
+              Close
+            </Button>
+          </div>
+        </>
+      </Modal> */}
     </>
   );
 }
