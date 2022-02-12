@@ -8,7 +8,7 @@ body {
   align-items: center;
 }
 
-.about-text li {
+.about-text2 li {
   margin-bottom: 6px;
   margin-left: 6px;
   list-style: none;
@@ -17,7 +17,7 @@ body {
   color: black;
   font-size: 30px;
 }
-.about-text li:before {
+.about-text2 li:before {
   content: "\f00c";
   font-family: "FontAwesome";
   /* color: white; */

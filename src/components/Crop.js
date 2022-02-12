@@ -140,7 +140,7 @@ export default function Crop(props) {
       <div className="main__container">
         <div className="trial">
           <div className="col-xs-12 col-md-12 center2">
-            <div className="about-text" style={{}}>
+            <div className="about-text2" style={{}}>
               {/* <h2>Crop Recommendation</h2> */}
               <p>
                 <li>
