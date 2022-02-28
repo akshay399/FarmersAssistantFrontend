@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-
+import getProduct from "./getProductImage.jpg";
 import useStyles from "./newsStyles";
 import data from "../data/planet.json";
 import Card from "@mui/material/Card";
@@ -75,15 +75,21 @@ const styles = {
   },
 };
 function DiseasePortal() {
+  const [modalTreatment, setModalTreatment] = useState("");
+  const [productModal, setProductModal] = useState([]);
   const [treat, setTreat] = useState("");
   const classes = useStyles();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productModalIsOpen, setProductModalIsOpen] = useState(false);
-  const treatment = () => {
-    alert("work");
+  const treatment = (index) => {
+    console.log("index from param", index);
+    setModalTreatment(new_data[index].treatment);
     setModalIsOpen(true);
+    console.log("please work", modalTreatment);
   };
-  const displayProducts = () => {
+  const displayProducts = (index) => {
+    console.log("product on click", new_data[index].products);
+    setProductModal(new_data[index].products);
     setProductModalIsOpen(true);
   };
 
@@ -91,6 +97,7 @@ function DiseasePortal() {
     <>
       <div className={classes.toolbar} />
       <div className={classes.toolbar} />
+      {console.log("trial data", new_data[0])}
       <Grid container justifyContent="center" spacing={3}>
         {Object.keys(new_data).map((ele, i) => (
           <>
@@ -114,11 +121,18 @@ function DiseasePortal() {
                   alt="news image"
                 />
                 <CardContent>
+                  <u>
+                    <h3
+                      className="data__text"
+                      dangerouslySetInnerHTML={{ __html: new_data[ele].title }}
+                    ></h3>
+                  </u>
                   <Typography
                     gutterBottom
                     variant="body2"
                     component="div"
                     noWrap
+                    style={{ marginTop: "-10px" }}
                     fontWeight="bold"
                     fontSize="13"
                   >
@@ -135,7 +149,7 @@ function DiseasePortal() {
                     size="small"
                     variant="contained"
                     style={{ padding: "10px" }}
-                    onClick={treatment}
+                    onClick={() => treatment(ele)}
                   >
                     Treatments
                   </Button>
@@ -144,7 +158,7 @@ function DiseasePortal() {
                     size="small"
                     variant="contained"
                     style={{ padding: "10px" }}
-                    onClick={displayProducts}
+                    onClick={() => displayProducts(ele)}
                   >
                     Products
                   </Button>
@@ -165,10 +179,10 @@ function DiseasePortal() {
                 >
                   Treatment:
                 </h3>
-
+                {/* <h3>{modalTreatment}</h3> */}
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: new_data[ele].treatment,
+                    __html: modalTreatment,
                   }}
                 >
                   {console.log("jaja", ele)}
@@ -188,10 +202,8 @@ function DiseasePortal() {
               </>
             </Modal>
             <Modal
-              // style={{ width: "80px" }}
-              // style={
-              //   (customStyles, { width: "auto", height: "auto", padding: "50px" })
-              // }
+              style={{ height: "150px", width: "80px" }}
+              style={(customStyles, { width: "auto", padding: "50px" })}
               isOpen={productModalIsOpen}
             >
               <>
@@ -207,26 +219,40 @@ function DiseasePortal() {
                 >
                   PRODUCTS:
                 </h3>
-                <Carousel
-                  onClick={treatment}
-                  style={{ marginTop: "50px", height: "auto" }}
-                >
-                  {new_data[ele].products.map((one, i) => {
+                <Carousel style={{ color: "red" }}>
+                  {productModal.map((one, i) => {
                     return (
-                      <>
-                        <img style={{ height: "auto" }} src={one.image}></img>
-                        <p>{one.title}</p>
-                        <a herf={one.link}>Get the product</a>
-                      </>
+                      <div
+                        style={{
+                          display: "grid",
+                          height: "300px",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <a style={{}} target="_blank" href={one.link}>
+                          <img
+                            style={{ height: "200px" }}
+                            src={one.image}
+                          ></img>
+                          <br></br>
+                          <br></br>
+                          <img
+                            style={{ height: "20px", marginLeft: "50px" }}
+                            src={getProduct}
+                          ></img>
+                        </a>
+                        <p style={{ marginLeft: "25 px" }}>{one.title}</p>
+                      </div>
                     );
                   })}
                 </Carousel>
                 <div>
                   {" "}
                   <Button
+                    style={{ position: "relative" }}
                     variant="contained"
                     color="success"
-                    style={{ marginTop: "40", marginBottom: "20" }}
+                    style={{ marginTop: "15", marginBottom: "10px" }}
                     onClick={() => setProductModalIsOpen(false)}
                   >
                     {" "}
@@ -238,52 +264,6 @@ function DiseasePortal() {
           </>
         ))}
       </Grid>
-
-      {/* <Modal
-        // style={{ width: "80px" }}
-        // style={
-        //   (customStyles, { width: "auto", height: "auto", padding: "50px" })
-        // }
-        isOpen={productModalIsOpen}
-      >
-        <>
-          <div style={{ marginTop: "40px" }} />
-          <h3
-            style={{
-              color: "#38b000",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            PRODUCTS:
-          </h3>
-          <Carousel style={{ marginTop: "50px", height: "auto" }}>
-            {Object.keys(new_data).map((ele, i) => {
-              return (
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: new_data[ele].treatment,
-                  }}
-                ></p>
-              );
-            })}
-          </Carousel>
-          <div>
-            {" "}
-            <Button
-              variant="contained"
-              color="success"
-              style={{ marginTop: "40", marginBottom: "20" }}
-              onClick={() => setModalIsOpen(false)}
-            >
-              {" "}
-              Close
-            </Button>
-          </div>
-        </>
-      </Modal> */}
     </>
   );
 }
