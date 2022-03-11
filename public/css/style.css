@@ -18,16 +18,16 @@ h2 {
   margin: 0 0 20px;
   font-weight: 800;
   font-size: 36px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 h3 {
   font-size: 20px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 h4 {
   font-size: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 600;
 }
 h5 {
@@ -84,7 +84,7 @@ hr {
   font-family: "Raleway", sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #ffffff;
   text-transform: uppercase;
 }
 #menu.navbar-default .navbar-nav > li > a {
@@ -203,6 +203,7 @@ a:focus,
   outline: none;
   outline-offset: none;
 }
+
 /* Header Section */
 .intro {
   display: table;

@@ -1,28 +1,30 @@
 import { Link } from "react-router-dom";
+import "./navigation.css";
 export const Navigation = (props) => {
   const { handleLogout, user } = props;
   {
     console.log("this is user in nav", user);
   }
   return (
-    <nav id="menu" className="navbar navbar-default navbar-fixed-top">
+    <nav id="menu" className="   navbar-default navbar-fixed-top">
       <div className="container">
         <div className="navbar-header">
           <button
             type="button"
+            style={{ height: "25px" }}
             className="navbar-toggle collapsed"
             data-toggle="collapse"
             data-target="#bs-example-navbar-collapse-1"
           >
             {" "}
-            <span className="sr-only">Toggle navigation</span>{" "}
-            <span className="icon-bar"></span>{" "}
-            <span className="icon-bar"></span>{" "}
-            <span className="icon-bar"></span>{" "}
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
           </button>
           <a
             style={{ color: "black" }}
-            className="navbar-brand page-scroll"
+            className=" navbar-brand page-scroll"
             href="/"
           >
             Farmer's Assistant
@@ -30,7 +32,7 @@ export const Navigation = (props) => {
         </div>
 
         <div
-          className="collapse navbar-collapse"
+          className="collapse navbar-collapse "
           id="bs-example-navbar-collapse-1"
         >
           <ul className="nav navbar-nav navbar-right">
