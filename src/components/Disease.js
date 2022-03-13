@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import useStyles from "./newsStyles";
 import "./Disease.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   useLocation,
   BrowserRouter as Router,
@@ -15,6 +16,8 @@ import {
   Link,
 } from "react-router-dom";
 import data from "../data/planet.json";
+import Spinner from "react-bootstrap/Spinner";
+
 console.log("type of data", data);
 Object.keys(data).map((ele, i) => console.log("hi", data[ele].title));
 var stringg = JSON.stringify(data);
@@ -29,13 +32,16 @@ function replaceAll(str, find, replace) {
 var new_data = JSON.parse(stringg);
 const customStyles = {
   content: {
-    maxheight: "500px",
+    minHeight: "450px",
+    minWidth: "950px",
+    height: "auto",
     maxwidth: "500px",
+    height: "auto",
     top: "50%",
     left: "50%",
     right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
+    // bottom: "auto",
+    // marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },
   inp: {
@@ -60,12 +66,13 @@ export default function Disease() {
   const [cure, setCure] = useState("");
   const [disease, setDisease] = useState("");
   const [status, setStatus] = useState("");
-
+  const [imageUri, setImageUri] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState();
   // This function will be triggered when the file field change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       console.log("image change", e.target.files[0]);
-
       setSelectedImage(e.target.files[0]);
     }
   };
@@ -78,7 +85,7 @@ export default function Disease() {
     console.log(e.target);
     console.log(selectedImage);
     axios({
-      url: "https://farmers-assistant-backend.herokuapp.com/disease-predict",
+      url: "http://64.227.170.225:8000/disease-predict",
       method: "POST",
       data: formdata,
     }).then((response) => {
@@ -88,10 +95,12 @@ export default function Disease() {
       setDisease(response.data.prediction.Disease);
       setCause(response.data.prediction.Cause);
       setCure(response.data.prediction.Cure);
+      setImageUri(response.data.explanation);
       console.table("tab", crop, disease, cause, cure);
+      setLoading(false);
     });
     setModalIsOpen(true);
-    // routeChange();
+    setLoading(true);
   };
 
   // This function will be triggered when the "Remove This Image" button is clicked
@@ -142,44 +151,128 @@ export default function Disease() {
           </div>
         </div>
       </div>
-      <Modal style={customStyles} isOpen={modalIsOpen}>
-        <h3
-          style={{
-            color: "#38b000",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-        >
-          Result:
-        </h3>
-        <p>
-          Crop: <span style={{ color: "black", fontSize: "20px" }}>{crop}</span>
-        </p>
-        <p>
-          Disease:{" "}
-          <span style={{ color: "black", fontSize: "20px" }}>{disease}</span>
-        </p>
-        <p>
-          Cause:{" "}
-          <span style={{ color: "black", fontSize: "20px" }}>{cause}</span>
-        </p>
-        <p>
-          Cure: <span style={{ color: "black", fontSize: "20px" }}>{cure}</span>
-        </p>
-        {/* <p>crop: {crop}</p> */}
-        <div>
+      <Modal
+        style={{ position: "relative", zIndex: "100001", display: "grid" }}
+        style={customStyles}
+        isOpen={modalIsOpen}
+      >
+        <div className="modal__components">
+          <h3
+            style={{
+              color: "#38b000",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            {/* <Spinner animation="border" /> */}
+            <h1>Result</h1>
+            <hr style={{ width: "100%" }}></hr>
+          </h3>
+          {/* --------- */}
+          {loading ? (
+            <CircularProgress color="success" />
+          ) : (
+            <div>
+              <p>
+                <b style={{ fontSize: "20px" }}>Crop:</b>{" "}
+                <span style={{ color: "black", fontSize: "20px" }}>{crop}</span>
+              </p>
+              <p>
+                <b style={{ fontSize: "20px" }}>Disease: </b>
+                <span style={{ color: "black", fontSize: "20px" }}>
+                  {disease}
+                </span>
+              </p>
+              <p>
+                <b style={{ fontSize: "20px" }}>Cause: </b>
+                <span style={{ color: "black", fontSize: "20px" }}>
+                  {cause}
+                </span>
+              </p>
+              <p>
+                <b style={{ fontSize: "20px" }}>Cure: </b>
+                <span style={{ color: "black", fontSize: "20px" }}>{cure}</span>
+              </p>
+              <hr style={{ width: "100%" }}></hr>
+
+              {/* ------------- */}
+              <h1 style={{ color: "black" }}>LIME implementation</h1>
+              <h3 style={{ color: "black" }}>
+                The green part shows the portion of the leaf which is most
+                affected by the disease.
+              </h3>
+
+              <div id="index-gallery">
+                {/* <div
+                  style={{ float: "left", padding: "10px" }}
+                  className="item"
+                >
+                  <img src={URL.createObjectURL(selectedImage)} alt="" />
+                  <p>Orignal image</p>
+                </div> */}
+
+                <div
+                  style={{ float: "right", padding: "10%" }}
+                  className="item"
+                >
+                  <img style={styles.imageUri} src={imageUri} alt="" />
+                  {/* <p style={{ marginLeft: "100%" }}>
+                    <b>LIME</b>
+                  </p> */}
+                </div>
+              </div>
+
+              {/* ------------- */}
+              {/* <div className="compare__images">
+                <div className="orignal__image">
+                  <img
+                    style={{ float: "left", marginLeft: "10%" }}
+                    src={URL.createObjectURL(selectedImage)}
+                    // style={styles.image}
+                    alt="Thumb"
+                  />
+                  <p style={{ float: "left", marginLeft: "10%" }}>
+                    {" "}
+                    Your text{" "}
+                  </p>
+                </div>
+                <div className="lime__image">
+                  <img
+                    style={{ float: "right", marginRight: "10%" }}
+                    src={imageUri}
+                  ></img>
+                </div>
+              </div> */}
+              <br></br>
+              <button
+                onClick={() => setModalIsOpen(false)}
+                style={styles.close}
+              >
+                Close
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* --------------- */}
+        {/* <div>
           {" "}
           <Button
+            style={{ height: "50px", width: "70px" }}
             variant="contained"
             color="success"
             onClick={() => setModalIsOpen(false)}
           >
             {" "}
-            Close
+            <span style={{""}}>Close</span>
           </Button>
-        </div>
+        </div> */}
+        {/* <button onClick={() => setModalIsOpen(false)} style={styles.close}>
+          Close
+        </button> */}
       </Modal>
     </>
   );
@@ -222,6 +315,24 @@ const styles = {
     color: "white",
     border: "none",
     width: "25%",
+  },
+  close: {
+    padding: 15,
+    background: "#38b000",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+    // marginTop: "5%",
+    marginLeft: "50%",
+  },
+  imageUri: {
+    padding: 9,
+    background: "black",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+    marginTop: "5%",
+    marginLeft: "25%",
   },
   textCenter: {
     textAlign: "center",
