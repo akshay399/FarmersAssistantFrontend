@@ -50,7 +50,7 @@ const styles = {
 
 const customStyles = {
   content: {
-    minWidth: "200px",
+    minWidth: "250px",
     minHeight: "200px",
     top: "50%",
     left: "50%",
@@ -251,7 +251,12 @@ export default function Crop(props) {
             textAlign: "center",
           }}
         >
-          <b>{result}</b>
+          <h3 style={{ color: "black" }}>
+            You should grow{" "}
+            <u>
+              <h3 style={{ color: "#38b000" }}>{result}</h3>
+            </u>
+          </h3>
 
           <div>
             {" "}

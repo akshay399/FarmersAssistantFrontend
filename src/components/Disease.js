@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import Button from "@mui/material/Button";
@@ -7,6 +7,9 @@ import useStyles from "./newsStyles";
 import "./Disease.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CircularProgress from "@mui/material/CircularProgress";
+import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import {
   useLocation,
   BrowserRouter as Router,
@@ -56,7 +59,7 @@ const customStyles = {
   },
 };
 
-export default function Disease() {
+function Disease(props) {
   const history = useHistory();
   const classes = useStyles();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -173,7 +176,53 @@ export default function Disease() {
           </h3>
           {/* --------- */}
           {loading ? (
-            <CircularProgress color="success" />
+            // <CircularProgress color="success" />
+            <div>
+              <Box
+                sx={{
+                  position: "relative",
+                  display: "flex",
+                  top: "95",
+                }}
+              >
+                <CircularProgress
+                  color="success"
+                  style={{
+                    width: "100",
+                    top: "100%",
+                    left: "42%",
+                    position: "absolute",
+                    // display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  variant="determinate"
+                  {...props}
+                />
+                <Box
+                  // style={{ width: "100" }}
+                  sx={{
+                    top: 5,
+                    left: "48.5%",
+                    bottom: "10",
+                    right: 0,
+                    position: "absolute",
+                    // display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Typography
+                    style={{ fontSize: "20px" }}
+                    variant="caption"
+                    component="div"
+                    color="black"
+                  >
+                    {`${Math.round(props.value)}%`}
+                  </Typography>
+                </Box>
+              </Box>
+            </div>
           ) : (
             <div>
               <p>
@@ -277,7 +326,22 @@ export default function Disease() {
     </>
   );
 }
+export default function CircularStatic() {
+  const [progress, setProgress] = useState(10);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 0 : prevProgress + 10
+      );
+    }, 4000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return <Disease value={progress} />;
+}
 // export default App;
 
 // Just some styles
